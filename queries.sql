@@ -1,13 +1,6 @@
--- ============================================================
--- Sales Data Analysis — Advanced SQL Queries
--- Author  : Praveena
--- Purpose : Revenue trends, customer behaviour & regional KPIs
--- ============================================================
 
-
--- ──────────────────────────────────────────────────────────
 -- 1. TOTAL REVENUE & PROFIT SUMMARY
--- ──────────────────────────────────────────────────────────
+
 SELECT
     COUNT(*)                        AS total_orders,
     COUNT(DISTINCT customer_id)     AS unique_customers,
@@ -18,9 +11,9 @@ SELECT
 FROM sales;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 2. REGIONAL PERFORMANCE (with Ranking)
--- ──────────────────────────────────────────────────────────
+
 SELECT
     region,
     COUNT(*)                           AS total_orders,
@@ -33,9 +26,9 @@ GROUP BY region
 ORDER BY total_sales DESC;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 3. MONTHLY REVENUE WITH MONTH-OVER-MONTH GROWTH (CTE)
--- ──────────────────────────────────────────────────────────
+
 WITH monthly_sales AS (
     SELECT
         year,
@@ -60,9 +53,9 @@ SELECT * FROM mom_growth
 ORDER BY year, month;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 4. CATEGORY REVENUE SHARE (Window Function)
--- ──────────────────────────────────────────────────────────
+
 SELECT
     category,
     ROUND(SUM(sales), 2) AS category_revenue,
@@ -75,9 +68,8 @@ GROUP BY category
 ORDER BY category_revenue DESC;
 
 
--- ──────────────────────────────────────────────────────────
 -- 5. TOP 10 CUSTOMERS BY LIFETIME VALUE
--- ──────────────────────────────────────────────────────────
+
 SELECT
     customer_id,
     COUNT(DISTINCT order_id)   AS total_orders,
@@ -92,9 +84,9 @@ ORDER BY lifetime_value DESC
 LIMIT 10;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 6. SEASONAL SALES PATTERN (Quarter Analysis)
--- ──────────────────────────────────────────────────────────
+
 SELECT
     year,
     quarter,
@@ -109,9 +101,9 @@ GROUP BY year, quarter
 ORDER BY year, quarter;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 7. HIGH DISCOUNT IMPACT ANALYSIS (Subquery)
--- ──────────────────────────────────────────────────────────
+
 SELECT
     category,
     ROUND(AVG(discount) * 100, 1)    AS avg_discount_pct,
@@ -126,9 +118,9 @@ GROUP BY category
 ORDER BY avg_discount_pct DESC;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 8. RUNNING TOTAL REVENUE PER REGION (Window Function)
--- ──────────────────────────────────────────────────────────
+
 SELECT
     region,
     year,
@@ -146,9 +138,8 @@ GROUP BY region, year, month
 ORDER BY region, year, month;
 
 
--- ──────────────────────────────────────────────────────────
 -- 9. SEGMENT-WISE PERFORMANCE COMPARISON
--- ──────────────────────────────────────────────────────────
+
 SELECT
     segment,
     COUNT(DISTINCT customer_id)      AS unique_customers,
@@ -160,9 +151,9 @@ GROUP BY segment
 ORDER BY total_revenue DESC;
 
 
--- ──────────────────────────────────────────────────────────
+
 -- 10. YOY GROWTH (Self-Join via CTE)
--- ──────────────────────────────────────────────────────────
+
 WITH yearly AS (
     SELECT year, ROUND(SUM(sales), 2) AS annual_revenue
     FROM sales
