@@ -1,9 +1,4 @@
-"""
-Sales Data Analysis - Python & SQL
-Author: Praveena
-Description: Analyzes 50,000+ sales records to identify revenue trends,
-             customer behavior, and seasonal sales patterns using Python & SQL.
-"""
+
 
 import pandas as pd
 import numpy as np
@@ -14,9 +9,9 @@ import sqlite3
 import warnings
 warnings.filterwarnings('ignore')
 
-# ─────────────────────────────────────────
+
 # 1. DATA GENERATION (simulates real data)
-# ─────────────────────────────────────────
+
 np.random.seed(42)
 N = 50000
 
@@ -55,9 +50,9 @@ print(f"   Date range  : {df['order_date'].min().date()} → {df['order_date'].m
 print(f"   Total Sales : ₹{df['sales'].sum():,.0f}")
 print(f"   Total Profit: ₹{df['profit'].sum():,.0f}")
 
-# ─────────────────────────────────────────
+
 # 2. DATA CLEANING & EDA
-# ─────────────────────────────────────────
+
 print("\n── DATA QUALITY ──────────────────────────────────────")
 print(f"   Missing values : {df.isnull().sum().sum()}")
 print(f"   Duplicate rows : {df.duplicated().sum()}")
@@ -70,9 +65,9 @@ print(f"   Removed {before - len(df)} rows with invalid sales values")
 print("\n── DESCRIPTIVE STATISTICS ────────────────────────────")
 print(df[['sales', 'quantity', 'discount', 'profit']].describe().round(2))
 
-# ─────────────────────────────────────────
+
 # 3. SQL ANALYSIS (via SQLite)
-# ─────────────────────────────────────────
+
 conn = sqlite3.connect(":memory:")
 df.to_sql("sales", conn, index=False, if_exists="replace")
 
@@ -129,9 +124,9 @@ for title, query in queries.items():
 
 conn.close()
 
-# ─────────────────────────────────────────
+
 # 4. VISUALIZATIONS
-# ─────────────────────────────────────────
+
 sns.set_theme(style="darkgrid", palette="muted")
 fig, axes = plt.subplots(2, 3, figsize=(18, 11))
 fig.suptitle("Sales Data Analysis Dashboard — Praveena", fontsize=16,
